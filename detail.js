@@ -1,5 +1,18 @@
 let currentPokemonId = null;
 
+document.addEventListener('DOMContentLoaded', () => {
+  const MAX_POKEMONS = 151;
+  const pokemonID = new URLSearchParams(window.location.search).get('id');
+  const id = parseInt(pokemonID, 10);
+
+  if (id < 1 || id > MAX_POKEMONS) {
+    return (window.location.href = './index.html');
+  }
+
+  currentPokemonId = id;
+  loadPokemon(id);
+});
+
 async function loadPokemon(id) {
   try {
     const [pokemon, pokemonSpecies] = await Promise.all([
@@ -29,10 +42,14 @@ async function loadPokemon(id) {
       rightArrow.removeEventListener('click', navigatePokemon);
 
       if (id !== 1) {
-        leftArrow.addEventListener('click', () => navigatePokemon(id - 1));
+        leftArrow.addEventListener('click', () => {
+          navigatePokemon(id - 1);
+        });
       }
       if (id !== 151) {
-        rightArrow.addEventListener('click', () => navigatePokemon(id + 1));
+        rightArrow.addEventListener('click', () => {
+          navigatePokemon(id + 1);
+        });
       }
 
       window.history.pushState({}, '', `./detail.html?id=${id}`);
@@ -40,7 +57,7 @@ async function loadPokemon(id) {
 
     return true;
   } catch (error) {
-    console.error('An error occurred while fetching Pokemon data:', error);
+    console.error('An error occured while fetching Pokemon data:', error);
     return false;
   }
 }
@@ -66,8 +83,9 @@ const typeColors = {
   rock: '#B8A038',
   ghost: '#705898',
   dragon: '#7038F8',
-  dark: '#EE99AC',
+  dark: '#705848',
   steel: '#B8B8D0',
+  dark: '#EE99AC',
 };
 
 function setElementStyles(elements, cssProperty, value) {
@@ -119,10 +137,10 @@ function setTypeBackgroundColor(pokemon) {
   const styleTag = document.createElement('style');
   styleTag.innerHTML = `
     .stats-wrap .progress-bar::-webkit-progress-bar {
-      background-color: rgba(${rgbaColor}, 0.5);
+        background-color: rgba(${rgbaColor}, 0.5);
     }
     .stats-wrap .progress-bar::-webkit-progress-value {
-      background-color: ${color};
+        background-color: ${color};
     }
   `;
   document.head.appendChild(styleTag);
@@ -199,7 +217,7 @@ function displayPokemonDetails(pokemon) {
     speed: 'SPD',
   };
 
-  stats.forEach(({ stat, baseStat }) => {
+  stats.forEach(({ stat, base_stat }) => {
     const statDiv = document.createElement('div');
     statDiv.className = 'stats-wrap';
     statsWrapper.appendChild(statDiv);
@@ -211,12 +229,12 @@ function displayPokemonDetails(pokemon) {
 
     createAndAppendElement(statDiv, 'p', {
       className: 'body3-fonts',
-      textContent: String(baseStat).padStart(3, '0'),
+      textContent: String(base_stat).padStart(3, '0'),
     });
 
     createAndAppendElement(statDiv, 'progress', {
       className: 'progress-bar',
-      value: baseStat,
+      value: base_stat,
       max: 100,
     });
   });
@@ -225,27 +243,11 @@ function displayPokemonDetails(pokemon) {
 }
 
 function getEnglishFlavorText(pokemonSpecies) {
-  const flavorTextEntry = pokemonSpecies.flavor_text_entries.find(
-    (entry) => entry.language.name === 'en'
-  );
-
-  if (flavorTextEntry) {
-    const flavor = flavorTextEntry.flavor_text.replace(/\f/g, ' ');
-    return flavor;
+  for (let entry of pokemonSpecies.flavor_text_entries) {
+    if (entry.language.name === 'en') {
+      let flavor = entry.flavor_text.replace(/\f/g, ' ');
+      return flavor;
+    }
   }
   return '';
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const MAX_POKEMONS = 151;
-  const pokemonID = new URLSearchParams(window.location.search).get('id');
-  const id = parseInt(pokemonID, 10);
-
-  if (id < 1 || id > MAX_POKEMONS) {
-    window.location.href = './index.html';
-    return;
-  }
-
-  currentPokemonId = id;
-  loadPokemon(id);
-});
