@@ -6,8 +6,7 @@ h4,
 .body3-fonts {
   line-height: 1rem;
 }
-
-h1 {
+ h1 {
   font-size: 24px;
   line-height: 2rem;
 }
@@ -73,8 +72,7 @@ body {
   display: flex;
   align-items: center;
 }
-
-.logo-wrapper > h1 {
+ .logo-wrapper > h1 {
   color: #ffffff;
 }
 
@@ -104,7 +102,7 @@ body {
 }
 
 .search-wrap svg path {
-  fill: var(--identity-primary);
+  fill: #dc0a2d;
 }
 
 .search-wrap > input {
@@ -141,13 +139,13 @@ body {
 
 .filter-wrapper {
   position: absolute;
-  background: var(--identity-primary);
-  border: 4px solid var(--identity-primary);
+  background: #dc0a2d;
+  border: 4px solid #dc0a2d;
   border-top: 0;
   border-radius: 12px;
   padding: 0px 4px 4px 4px;
   right: 0px;
-  box-shadow: var(--drop-shadow-hover);
+  box-shadow: 0px 3px 12px 3px rgba(0, 0, 0, 0.2);
   min-width: 113px;
   top: 40px;
   display: none;
@@ -172,7 +170,7 @@ body {
 
 .filter-wrapper > .body2-fonts {
   color: #ffffff;
-  font-weight: var(--font-weight-bold);
+  font-weight: 700;
   padding: 16px 20px;
 }
 
@@ -195,7 +193,7 @@ body {
 }
 
 .filter-wrap input {
-  accent-color: var(--identity-primary);
+  accent-color: #dc0a2d;
 }
 
 .pokemon-list {
@@ -206,4 +204,50 @@ body {
   width: calc(100% - 1rem);
   max-height: 100px;
   overflow-y: auto;
+}
+
+.list-wrapper {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.list-item {
+  border-radius: 8px;
+  box-shadow: #dc0a2d;
+  background-color: #ffffff;
+  width: 8.85rem;
+  height: 8.85rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.list-item .number-wrap {
+  min-height: 16px;
+  text-align: right;
+  padding: 0 8px;
+  color: #666666;
+}
+
+.list-item .name-wrap {
+  border-radius: 7px;
+  background-color: #efefef;
+  padding: 24px 8px 4px 8px;
+  color: #212121;
+  margin-top: -18px;
+}
+
+.list-item .img-wrap {
+  width: 72px;
+  height: 72px;
+  margin: auto;
+}
+
+.list-item .img-wrap img {
+  width: 100%;
+  height: 100%;
 }
