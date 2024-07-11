@@ -13,6 +13,16 @@ function handleRightArrowClick() {
   navigatePokemon(currentPokemonId + 1);
 }
 
+function getEnglishFlavorText(pokemonSpecies) {
+  const pok = pokemonSpecies.flavor_text_entries;
+  for (const entry of pok) {
+    if (entry.language.name === 'en') {
+      return entry.flavor_text.replace(/\f/g, ' ');
+    }
+  }
+  return '';
+}
+
 async function loadPokemon(id) {
   try {
     const [pokemon, pokemonSpecies] = await Promise.all([
@@ -229,14 +239,4 @@ function displayPokemonDetails(pokemon) {
   });
 
   setTypeBackgroundColor(pokemon);
-}
-
-function getEnglishFlavorText(pokemonSpecies) {
-  const pok = pokemonSpecies.flavor_text_entries;
-  for (const entry of pok) {
-    if (entry.language.name === 'en') {
-      return entry.flavor_text.replace(/\f/g, ' ');
-    }
-  }
-  return '';
 }

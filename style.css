@@ -366,7 +366,7 @@ body {
   position: relative;
 }
 
-.pokemon-detail-wrap:before {
+.pokemon-detail-wrap::before {
   content: "";
   background-color: #e0e0e0;
   width: 1px;
@@ -469,15 +469,9 @@ div#not-found-message {
   font-weight: 600;
 }
 
-.arrow img {
-  -webkit-filter: brightness(0) grayscale(1) invert(1);
-  filter: brightness(0) grayscale(1) invert(1);
-  width: 28px;
-}
-
 .featured-img {
   position: relative;
-}
+}.pokemon-detail.move
 
 .featured-img a.arrow {
   display: inline-block;
