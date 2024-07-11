@@ -19,6 +19,10 @@ async function navigatePokemon(id) {
   await loadPokemon(id);
 }
 
+function handleRightArrowClick() {
+  navigatePokemon(currentPokemonId + 1);
+}
+
 async function loadPokemon(id) {
   try {
     const [pokemon, pokemonSpecies] = await Promise.all([
@@ -60,10 +64,6 @@ async function loadPokemon(id) {
 
 function handleLeftArrowClick() {
   navigatePokemon(currentPokemonId - 1);
-}
-
-function handleRightArrowClick() {
-  navigatePokemon(currentPokemonId + 1);
 }
 
 const typeColors = {
@@ -116,13 +116,13 @@ function setTypeBackgroundColor(pokemon) {
   setElementStyles(
     document.querySelectorAll('.power-wrapper > p'),
     'backgroundColor',
-    color
+    color,
   );
 
   setElementStyles(
     document.querySelectorAll('.stats-wrap p.stats'),
     'color',
-    color
+    color,
   );
 
   setElementStyles(
@@ -159,7 +159,7 @@ function createAndAppendElement(parent, tag, options = {}) {
 
 function displayPokemonDetails(pokemon) {
   const {
-    name, id, types, weight, height, abilities, stats 
+    name, id, types, weight, height, abilities, stats, 
   } = pokemon;
   const capitalizePokemonName = capitalizeFirstLetter(name);
 
