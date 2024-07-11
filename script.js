@@ -10,10 +10,9 @@ let allPokemons = [];
 async function fetchPokemonDataBeforeRedirect(id) {
   try {
     const [pokemon, pokemonSpecies] = await Promise.all([
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) =>
-        res.json()),
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()),
       fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((res) =>
-        res.json()),]);
+        res.json()), ]);
     return { pokemon, pokemonSpecies };
   } catch (error) {
     console.error('Failed to get Pokemon data before redirect', error);
@@ -69,8 +68,7 @@ function handleSearch() {
     });
   } else if (nameFilter.checked) {
     filteredPokemons = allPokemons.filter((pokemon) =>
-      pokemon.name.toLowerCase().startsWith(searchTerm)
-    );
+      pokemon.name.toLowerCase().startsWith(searchTerm));
   } else {
     filteredPokemons = allPokemons;
   }
