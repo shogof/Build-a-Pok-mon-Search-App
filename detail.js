@@ -128,7 +128,7 @@ function setTypeBackgroundColor(pokemon) {
   setElementStyles(
     document.querySelectorAll('.stats-wrap .progress-bar'),
     'color',
-    color
+    color,
   );
 
   const rgbaColor = rgbaFromHex(color);
@@ -158,7 +158,9 @@ function createAndAppendElement(parent, tag, options = {}) {
 }
 
 function displayPokemonDetails(pokemon) {
-  const { name, id, types, weight, height, abilities, stats } = pokemon;
+  const {
+    name, id, types, weight, height, abilities, stats 
+  } = pokemon;
   const capitalizePokemonName = capitalizeFirstLetter(name);
 
   document.querySelector('title').textContent = capitalizePokemonName;
