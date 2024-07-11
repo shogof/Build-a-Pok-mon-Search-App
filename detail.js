@@ -29,14 +29,10 @@ async function loadPokemon(id) {
       rightArrow.removeEventListener('click', navigatePokemon);
 
       if (id !== 1) {
-        leftArrow.addEventListener('click', () => {
-          navigatePokemon(id - 1);
-        });
+        leftArrow.addEventListener('click', () => navigatePokemon(id - 1));
       }
       if (id !== 151) {
-        rightArrow.addEventListener('click', () => {
-          navigatePokemon(id + 1);
-        });
+        rightArrow.addEventListener('click', () => navigatePokemon(id + 1));
       }
 
       window.history.pushState({}, '', `./detail.html?id=${id}`);
@@ -203,7 +199,7 @@ function displayPokemonDetails(pokemon) {
     speed: 'SPD',
   };
 
-  stats.forEach(({ stat, base_stat }) => {
+  stats.forEach(({ stat, baseStat }) => {
     const statDiv = document.createElement('div');
     statDiv.className = 'stats-wrap';
     statsWrapper.appendChild(statDiv);
@@ -215,12 +211,12 @@ function displayPokemonDetails(pokemon) {
 
     createAndAppendElement(statDiv, 'p', {
       className: 'body3-fonts',
-      textContent: String(base_stat).padStart(3, '0'),
+      textContent: String(baseStat).padStart(3, '0'),
     });
 
     createAndAppendElement(statDiv, 'progress', {
       className: 'progress-bar',
-      value: base_stat,
+      value: baseStat,
       max: 100,
     });
   });
@@ -229,11 +225,13 @@ function displayPokemonDetails(pokemon) {
 }
 
 function getEnglishFlavorText(pokemonSpecies) {
-  for (const entry of pokemonSpecies.flavor_text_entries) {
-    if (entry.language.name === 'en') {
-      const flavor = entry.flavor_text.replace(/\f/g, ' ');
-      return flavor;
-    }
+  const flavorTextEntry = pokemonSpecies.flavor_text_entries.find(
+    (entry) => entry.language.name === 'en'
+  );
+
+  if (flavorTextEntry) {
+    const flavor = flavorTextEntry.flavor_text.replace(/\f/g, ' ');
+    return flavor;
   }
   return '';
 }
