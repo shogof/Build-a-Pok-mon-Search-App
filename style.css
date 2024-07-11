@@ -112,6 +112,10 @@ body {
   margin-left: 16px;
 }
 
+.detail-bg path {
+  fill: #fff;
+}
+
 .search-wrap svg path {
   fill: #f4c300;
 }
@@ -258,6 +262,15 @@ body {
   margin: auto;
 }
 
+.featured-img {
+  position: relative;
+}
+
+.detail-img-wrapper img {
+  width: 100%;
+  height: 100%;
+}
+
 .list-item .img-wrap img {
   width: 100%;
   height: 100%;
@@ -287,6 +300,21 @@ body {
 .detail-main .back-btn-wrap {
   max-height: 32px;
 }
+.power-wrapper > p
+.stats-wrap p {
+  color: #212121;
+  margin-right: 8px;
+  min-width: 19px;
+}
+
+.power-wrapper > p {
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: capitalize;
+  background-color: #74cb48;
+}
 
 .detail-main .back-btn-wrap path,
 .detail-main .header-wrapper p,
@@ -305,11 +333,6 @@ body {
   margin: auto;
   position: relative;
   z-index: 3;
-}
-
-.detail-img-wrapper img {
-  width: 100%;
-  height: 100%;
 }
 
 .detail-card-detail-wrapper {
@@ -332,15 +355,6 @@ body {
   gap: 16px;
 }
 
-.power-wrapper > p {
-  border-radius: 10px;
-  padding: 2px 8px;
-  font-weight: 700;
-  color: #fff;
-  text-transform: capitalize;
-  background-color: #74cb48;
-}
-
 .pokemon-detail.move p {
   text-transform: capitalize;
   word-break: break-all;
@@ -358,6 +372,7 @@ body {
 .pokemon-detail-wrapper {
   display: flex;
   align-items: flex-end;
+  min-height: 76px;
 }
 
 .pokemon-detail-wrapper .pokemon-detail-wrap {
@@ -390,10 +405,6 @@ body {
   gap: 8px;
 }
 
-.pokemon-detail-wrapper {
-  min-height: 76px;
-}
-
 .pokemon-detail.move {
   flex-direction: column;
   gap: 0;
@@ -417,12 +428,6 @@ body {
 .stats-wrap {
   display: flex;
   align-items: center;
-}
-
-.stats-wrap p {
-  color: #212121;
-  margin-right: 8px;
-  min-width: 19px;
 }
 
 .stats-wrap p.stats {
@@ -455,10 +460,6 @@ body {
   opacity: 0.1;
 }
 
-.detail-bg path {
-  fill: #fff;
-}
-
 div#not-found-message {
   display: none;
   position: absolute;
@@ -468,10 +469,6 @@ div#not-found-message {
   font-size: 20px;
   font-weight: 600;
 }
-
-.featured-img {
-  position: relative;
-}.pokemon-detail.move
 
 .featured-img a.arrow {
   display: inline-block;
