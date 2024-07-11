@@ -1,24 +1,4 @@
-let currentPokemonId = null;
-
-document.addEventListener('DOMContentLoaded', () => {
-  const MAX_POKEMONS = 151;
-  const pokemonID = new URLSearchParams(window.location.search).get('id');
-  const id = parseInt(pokemonID, 10);
-
-  if (id < 1 || id > MAX_POKEMONS) {
-    window.location.href = './index.html';
-    return;
-  }
-
-  currentPokemonId = id;
-  loadPokemon(id);
-});
-
-async function navigatePokemon(id) {
-  currentPokemonId = id;
-  await loadPokemon(id);
-}
-
+// Function declarations moved to the top to avoid "used before it was defined" errors
 async function loadPokemon(id) {
   try {
     const [pokemon, pokemonSpecies] = await Promise.all([
@@ -58,95 +38,9 @@ async function loadPokemon(id) {
   }
 }
 
-const typeColors = {
-  normal: '#A8A878',
-  fire: '#F08030',
-  water: '#6890F0',
-  electric: '#F8D030',
-  grass: '#78C850',
-  ice: '#98D8D8',
-  fighting: '#C03028',
-  poison: '#A040A0',
-  ground: '#E0C068',
-  flying: '#A890F0',
-  psychic: '#F85888',
-  bug: '#A8B820',
-  rock: '#B8A038',
-  ghost: '#705898',
-  dragon: '#7038F8',
-  steel: '#B8B8D0',
-  dark: '#EE99AC',
-};
-
-function setElementStyles(elements, cssProperty, value) {
-  elements.forEach((element) => {
-    element.style[cssProperty] = value;
-  });
-}
-
-function rgbaFromHex(hexColor) {
-  return [
-    parseInt(hexColor.slice(1, 3), 16),
-    parseInt(hexColor.slice(3, 5), 16),
-    parseInt(hexColor.slice(5, 7), 16),
-  ].join(', ');
-}
-
-function setTypeBackgroundColor(pokemon) {
-  const mainType = pokemon.types[0].type.name;
-  const color = typeColors[mainType];
-
-  if (!color) {
-    console.warn(`Color not defined for type: ${mainType}`);
-    return;
-  }
-
-  const detailMainElement = document.querySelector('.detail-main');
-  setElementStyles([detailMainElement], 'backgroundColor', color);
-  setElementStyles([detailMainElement], 'borderColor', color);
-
-  setElementStyles(
-    document.querySelectorAll('.power-wrapper > p'),
-    'backgroundColor',
-    color
-  );
-
-  setElementStyles(
-    document.querySelectorAll('.stats-wrap p.stats'),
-    'color',
-    color
-  );
-
-  setElementStyles(
-    document.querySelectorAll('.stats-wrap .progress-bar'),
-    'color',
-    color
-  );
-
-  const rgbaColor = rgbaFromHex(color);
-  const styleTag = document.createElement('style');
-  styleTag.innerHTML = `
-    .stats-wrap .progress-bar::-webkit-progress-bar {
-      background-color: rgba(${rgbaColor}, 0.5);
-    }
-    .stats-wrap .progress-bar::-webkit-progress-value {
-      background-color: ${color};
-    }
-  `;
-  document.head.appendChild(styleTag);
-}
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function createAndAppendElement(parent, tag, options = {}) {
-  const element = document.createElement(tag);
-  Object.keys(options).forEach((key) => {
-    element[key] = options[key];
-  });
-  parent.appendChild(element);
-  return element;
+async function navigatePokemon(id) {
+  currentPokemonId = id;
+  await loadPokemon(id);
 }
 
 function displayPokemonDetails(pokemon) {
@@ -232,3 +126,110 @@ function getEnglishFlavorText(pokemonSpecies) {
   }
   return '';
 }
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+function createAndAppendElement(parent, tag, options = {}) {
+  const element = document.createElement(tag);
+  Object.keys(options).forEach((key) => {
+    element[key] = options[key];
+  });
+  parent.appendChild(element);
+  return element;
+}
+
+function setElementStyles(elements, cssProperty, value) {
+  elements.forEach((element) => {
+    element.style[cssProperty] = value;
+  });
+}
+
+function rgbaFromHex(hexColor) {
+  return [
+    parseInt(hexColor.slice(1, 3), 16),
+    parseInt(hexColor.slice(3, 5), 16),
+    parseInt(hexColor.slice(5, 7), 16),
+  ].join(', ');
+}
+
+function setTypeBackgroundColor(pokemon) {
+  const mainType = pokemon.types[0].type.name;
+  const color = typeColors[mainType];
+
+  if (!color) {
+    console.warn(`Color not defined for type: ${mainType}`);
+    return;
+  }
+
+  const detailMainElement = document.querySelector('.detail-main');
+  setElementStyles([detailMainElement], 'backgroundColor', color);
+  setElementStyles([detailMainElement], 'borderColor', color);
+
+  setElementStyles(
+    document.querySelectorAll('.power-wrapper > p'),
+    'backgroundColor',
+    color
+  );
+
+  setElementStyles(
+    document.querySelectorAll('.stats-wrap p.stats'),
+    'color',
+    color
+  );
+
+  setElementStyles(
+    document.querySelectorAll('.stats-wrap .progress-bar'),
+    'color',
+    color
+  );
+
+  const rgbaColor = rgbaFromHex(color);
+  const styleTag = document.createElement('style');
+  styleTag.innerHTML = `
+    .stats-wrap .progress-bar::-webkit-progress-bar {
+      background-color: rgba(${rgbaColor}, 0.5);
+    }
+    .stats-wrap .progress-bar::-webkit-progress-value {
+      background-color: ${color};
+    }
+  `;
+  document.head.appendChild(styleTag);
+}
+
+const typeColors = {
+  normal: '#A8A878',
+  fire: '#F08030',
+  water: '#6890F0',
+  electric: '#F8D030',
+  grass: '#78C850',
+  ice: '#98D8D8',
+  fighting: '#C03028',
+  poison: '#A040A0',
+  ground: '#E0C068',
+  flying: '#A890F0',
+  psychic: '#F85888',
+  bug: '#A8B820',
+  rock: '#B8A038',
+  ghost: '#705898',
+  dragon: '#7038F8',
+  steel: '#B8B8D0',
+  dark: '#EE99AC',
+};
+
+// Event listener for DOMContentLoaded moved here for proper use of declared functions
+document.addEventListener('DOMContentLoaded', () => {
+  const MAX_POKEMONS = 151;
+  const pokemonID = new URLSearchParams(window.location.search).get('id');
+  const id = parseInt(pokemonID, 10);
+
+  if (id < 1 || id > MAX_POKEMONS) {
+    window.location.href = './index.html';
+    return;
+  }
+
+  currentPokemonId = id;
+  loadPokemon(id);
+});
+
