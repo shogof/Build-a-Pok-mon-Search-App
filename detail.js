@@ -1,19 +1,5 @@
 let currentPokemonId = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-  const MAX_POKEMONS = 151;
-  const pokemonID = new URLSearchParams(window.location.search).get('id');
-  const id = parseInt(pokemonID, 10);
-
-  if (id < 1 || id > MAX_POKEMONS) {
-    window.location.href = './index.html';
-    return;
-  }
-
-  currentPokemonId = id;
-  loadPokemon(id);
-});
-
 async function navigatePokemon(id) {
   currentPokemonId = id;
   await loadPokemon(id);
@@ -39,8 +25,7 @@ async function loadPokemon(id) {
       document.querySelector('.body3-fonts.pokemon-description').textContent = flavorText;
 
       const [leftArrow, rightArrow] = ['#leftArrow', '#rightArrow'].map((sel) =>
-        document.querySelector(sel)
-      );
+        document.querySelector(sel));
 
       leftArrow.removeEventListener('click', handleLeftArrowClick);
       rightArrow.removeEventListener('click', handleRightArrowClick);
@@ -65,6 +50,20 @@ async function loadPokemon(id) {
 function handleLeftArrowClick() {
   navigatePokemon(currentPokemonId - 1);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const MAX_POKEMONS = 151;
+  const pokemonID = new URLSearchParams(window.location.search).get('id');
+  const id = parseInt(pokemonID, 10);
+
+  if (id < 1 || id > MAX_POKEMONS) {
+    window.location.href = './index.html';
+    return;
+  }
+
+  currentPokemonId = id;
+  loadPokemon(id);
+});
 
 const typeColors = {
   normal: '#A8A878',
