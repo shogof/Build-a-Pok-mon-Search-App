@@ -1,6 +1,6 @@
 const inputElement = document.querySelector('#search-input');
-const search_icon = document.querySelector('#search-close-icon');
-const sort_wrapper = document.querySelector('.sort-wrapper');
+const searchIcon = document.querySelector('#search-close-icon');
+const sortWrapper = document.querySelector('.sort-wrapper');
 
 function search() {
   document.querySelector('#search-input').value = '';
@@ -16,12 +16,6 @@ function sort() {
   document.querySelector('body').classList.toggle('filter-wrapper-overlay');
 }
 
-inputElement.addEventListener('input', () => {
-  handleInputChange(inputElement);
-});
-search_icon.addEventListener('click', search);
-sort_wrapper.addEventListener('click', sort);
-
 function handleInputChange(inputElement) {
   const inputValue = inputElement.value;
 
@@ -35,3 +29,9 @@ function handleInputChange(inputElement) {
       .classList.remove('search-close-icon-visible');
   }
 }
+
+inputElement.addEventListener('input', () => {
+  handleInputChange(inputElement);
+});
+searchIcon.addEventListener('click', search);
+sortWrapper.addEventListener('click', sort);
