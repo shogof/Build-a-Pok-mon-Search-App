@@ -38,14 +38,14 @@ async function loadPokemon(id) {
         document.querySelector(sel)
       );
 
-      leftArrow.removeEventListener('click', navigatePokemon);
-      rightArrow.removeEventListener('click', navigatePokemon);
+      leftArrow.removeEventListener('click', handleLeftArrowClick);
+      rightArrow.removeEventListener('click', handleRightArrowClick);
 
       if (id !== 1) {
-        leftArrow.addEventListener('click', () => navigatePokemon(id - 1));
+        leftArrow.addEventListener('click', handleLeftArrowClick);
       }
       if (id !== 151) {
-        rightArrow.addEventListener('click', () => navigatePokemon(id + 1));
+        rightArrow.addEventListener('click', handleRightArrowClick);
       }
 
       window.history.pushState({}, '', `./detail.html?id=${id}`);
@@ -56,6 +56,14 @@ async function loadPokemon(id) {
     console.error('An error occurred while fetching Pokemon data:', error);
     return false;
   }
+}
+
+function handleLeftArrowClick() {
+  navigatePokemon(currentPokemonId - 1);
+}
+
+function handleRightArrowClick() {
+  navigatePokemon(currentPokemonId + 1);
 }
 
 const typeColors = {
