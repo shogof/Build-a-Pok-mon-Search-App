@@ -38,7 +38,7 @@ async function loadPokemon(id) {
       const flavorText = getEnglishFlavorText(pokemonSpecies);
       document.querySelector('.body3-fonts.pokemon-description').textContent = flavorText;
 
-      const [leftArrow, rightArrow] = ['#leftArrow', '#rightArrow'].map((sel) =>document.querySelector(sel));
+      const [leftArrow, rightArrow] = ['#leftArrow', '#rightArrow'].map((sel) => document.querySelector(sel));
       leftArrow.removeEventListener('click', handleLeftArrowClick);
       rightArrow.removeEventListener('click', handleRightArrowClick);
 
@@ -54,7 +54,6 @@ async function loadPokemon(id) {
 
     return true;
   } catch (error) {
-    console.error('An error occurred while fetching Pokemon data:', error);
     return false;
   }
 }
@@ -112,7 +111,6 @@ function setTypeBackgroundColor(pokemon) {
   const color = typeColors[mainType];
 
   if (!color) {
-    console.warn(`Color not defined for type: ${mainType}`);
     return;
   }
 
