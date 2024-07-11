@@ -368,7 +368,7 @@ body {
   position: relative;
 }
 
-.pokemon-detail-wrap:before {
+.pokemon-detail-wrap::before {
   content: "";
   background-color: #e0e0e0;
   width: 1px;
