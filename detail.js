@@ -5,6 +5,10 @@ async function navigatePokemon(id) {
   await loadPokemon(id);
 }
 
+function handleLeftArrowClick() {
+  navigatePokemon(currentPokemonId - 1);
+}
+
 function handleRightArrowClick() {
   navigatePokemon(currentPokemonId + 1);
 }
@@ -45,10 +49,6 @@ async function loadPokemon(id) {
     console.error('An error occurred while fetching Pokemon data:', error);
     return false;
   }
-}
-
-function handleLeftArrowClick() {
-  navigatePokemon(currentPokemonId - 1);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
