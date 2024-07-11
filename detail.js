@@ -15,7 +15,9 @@ function handleRightArrowClick() {
 
 function getEnglishFlavorText(pokemonSpecies) {
   const pok = pokemonSpecies.flavor_text_entries;
-  const englishTexts = pok.filter(entry => entry.language.name === 'en').map(entry => entry.flavor_text);
+  const englishTexts = pok
+    .filter((entry) => entry.language.name === 'en')
+    .map((entry) => entry.flavor_text);
   return englishTexts.length > 0 ? englishTexts[0].replace(/\f/g, ' ') : '';
 }
 
