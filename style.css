@@ -207,10 +207,6 @@ body {
   margin-bottom: 0;
 }
 
-.filter-wrap input {
-  accent-color: #f4c300;
-}
-
 .pokemon-list {
   background-color: #fff;
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.25) inset;
