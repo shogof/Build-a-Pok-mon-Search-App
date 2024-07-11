@@ -15,12 +15,8 @@ function handleRightArrowClick() {
 
 function getEnglishFlavorText(pokemonSpecies) {
   const pok = pokemonSpecies.flavor_text_entries;
-  for (const entry of pok) {
-    if (entry.language.name === 'en') {
-      return entry.flavor_text.replace(/\f/g, ' ');
-    }
-  }
-  return '';
+  const englishTexts = pok.filter(entry => entry.language.name === 'en').map(entry => entry.flavor_text);
+  return englishTexts.length > 0 ? englishTexts[0].replace(/\f/g, ' ') : '';
 }
 
 async function loadPokemon(id) {
