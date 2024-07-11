@@ -11,7 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   currentPokemonId = id;
   loadPokemon(id);
+  return;
 });
+
+async function navigatePokemon(id) {
+  currentPokemonId = id;
+  await loadPokemon(id);
+}
 
 async function loadPokemon(id) {
   try {
@@ -62,11 +68,6 @@ async function loadPokemon(id) {
   }
 }
 
-async function navigatePokemon(id) {
-  currentPokemonId = id;
-  await loadPokemon(id);
-}
-
 const typeColors = {
   normal: '#A8A878',
   fire: '#F08030',
@@ -83,7 +84,6 @@ const typeColors = {
   rock: '#B8A038',
   ghost: '#705898',
   dragon: '#7038F8',
-  dark: '#705848',
   steel: '#B8B8D0',
   dark: '#EE99AC',
 };
@@ -117,21 +117,15 @@ function setTypeBackgroundColor(pokemon) {
 
   setElementStyles(
     document.querySelectorAll('.power-wrapper > p'),
-    'backgroundColor',
-    color
-  );
+    'backgroundColor', color);
 
   setElementStyles(
     document.querySelectorAll('.stats-wrap p.stats'),
-    'color',
-    color
-  );
+    'color', color);
 
   setElementStyles(
     document.querySelectorAll('.stats-wrap .progress-bar'),
-    'color',
-    color
-  );
+    'color', color);
 
   const rgbaColor = rgbaFromHex(color);
   const styleTag = document.createElement('style');
@@ -160,7 +154,9 @@ function createAndAppendElement(parent, tag, options = {}) {
 }
 
 function displayPokemonDetails(pokemon) {
-  const { name, id, types, weight, height, abilities, stats } = pokemon;
+  const {
+    name, id, types, weight, height, abilities, stats 
+  } = pokemon;
   const capitalizePokemonName = capitalizeFirstLetter(name);
 
   document.querySelector('title').textContent = capitalizePokemonName;
@@ -168,11 +164,9 @@ function displayPokemonDetails(pokemon) {
   const detailMainElement = document.querySelector('.detail-main');
   detailMainElement.classList.add(name.toLowerCase());
 
-  document.querySelector('.name-wrap .name').textContent =
-    capitalizePokemonName;
+  document.querySelector('.name-wrap .name').textContent = capitalizePokemonName;
 
-  document.querySelector(
-    '.pokemon-id-wrap .body2-fonts'
+  document.querySelector('.pokemon-id-wrap .body2-fonts'
   ).textContent = `#${String(id).padStart(3, '0')}`;
 
   const imageElement = document.querySelector('.detail-img-wrapper img');
@@ -188,16 +182,13 @@ function displayPokemonDetails(pokemon) {
     });
   });
 
-  document.querySelector(
-    '.pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight'
+  document.querySelector('.pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight'
   ).textContent = `${weight / 10}kg`;
-  document.querySelector(
-    '.pokemon-detail-wrap .pokemon-detail p.body3-fonts.height'
+  document.querySelector('.pokemon-detail-wrap .pokemon-detail p.body3-fonts.height'
   ).textContent = `${height / 10}m`;
 
   const abilitiesWrapper = document.querySelector(
-    '.pokemon-detail-wrap .pokemon-detail.move'
-  );
+    '.pokemon-detail-wrap .pokemon-detail.move');
   abilities.forEach(({ ability }) => {
     createAndAppendElement(abilitiesWrapper, 'p', {
       className: 'body3-fonts',
@@ -243,9 +234,10 @@ function displayPokemonDetails(pokemon) {
 }
 
 function getEnglishFlavorText(pokemonSpecies) {
-  for (let entry of pokemonSpecies.flavor_text_entries) {
+  const pok = pokemonSpecies.flavor_text_entries;
+  for (const entry of pok) {
     if (entry.language.name === 'en') {
-      let flavor = entry.flavor_text.replace(/\f/g, ' ');
+      const flavor = entry.flavor_text.replace(/\f/g, ' ');
       return flavor;
     }
   }

@@ -66,7 +66,8 @@ function handleSearch() {
       return pokemonID.startsWith(searchTerm);
     });
   } else if (nameFilter.checked) {
-    filteredPokemons = allPokemons.filter((pokemon) => pokemon.name.toLowerCase().startsWith(searchTerm));
+    filteredPokemons = allPokemons.filter((pokemon) => pokemon.
+    name.toLowerCase().startsWith(searchTerm));
   } else {
     filteredPokemons = allPokemons;
   }
