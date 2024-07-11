@@ -1,5 +1,26 @@
 let currentPokemonId = null;
 
+async function navigatePokemon(id) {
+  currentPokemonId = id;
+  await loadPokemon(id);
+}
+
+function handleLeftArrowClick() {
+  navigatePokemon(currentPokemonId - 1);
+}
+
+function handleRightArrowClick() {
+  navigatePokemon(currentPokemonId + 1);
+}
+
+function getEnglishFlavorText(pokemonSpecies) {
+  const pok = pokemonSpecies.flavor_text_entries;
+  const englishTexts = pok
+    .filter((entry) => entry.language.name === 'en')
+    .map((entry) => entry.flavor_text);
+  return englishTexts.length > 0 ? englishTexts[0].replace(/\f/g, ' ') : '';
+}
+
 async function loadPokemon(id) {
   try {
     const [pokemon, pokemonSpecies] = await Promise.all([
@@ -33,27 +54,6 @@ async function loadPokemon(id) {
   } catch (error) {
     return false;
   }
-}
-
-async function navigatePokemon(id) {
-  currentPokemonId = id;
-  await loadPokemon(id);
-}
-
-function handleLeftArrowClick() {
-  navigatePokemon(currentPokemonId - 1);
-}
-
-function handleRightArrowClick() {
-  navigatePokemon(currentPokemonId + 1);
-}
-
-function getEnglishFlavorText(pokemonSpecies) {
-  const pok = pokemonSpecies.flavor_text_entries;
-  const englishTexts = pok
-    .filter((entry) => entry.language.name === 'en')
-    .map((entry) => entry.flavor_text);
-  return englishTexts.length > 0 ? englishTexts[0].replace(/\f/g, ' ') : '';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
