@@ -1,94 +1,17 @@
 let currentPokemonId = null;
 
-async function navigatePokemon(id) {
-  currentPokemonId = id;
-  await loadPokemon(id);
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
-function handleLeftArrowClick() {
-  navigatePokemon(currentPokemonId - 1);
+function createAndAppendElement(parent, tag, options = {}) {
+  const element = document.createElement(tag);
+  Object.keys(options).forEach((key) => {
+    element[key] = options[key];
+  });
+  parent.appendChild(element);
+  return element;
 }
-
-function handleRightArrowClick() {
-  navigatePokemon(currentPokemonId + 1);
-}
-
-function getEnglishFlavorText(pokemonSpecies) {
-  const pok = pokemonSpecies.flavor_text_entries;
-  const englishTexts = pok
-    .filter((entry) => entry.language.name === 'en')
-    .map((entry) => entry.flavor_text);
-  return englishTexts.length > 0 ? englishTexts[0].replace(/\f/g, ' ') : '';
-}
-
-async function loadPokemon(id) {
-  try {
-    const [pokemon, pokemonSpecies] = await Promise.all([
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()),
-      fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((res) => res.json()),
-    ]);
-
-    const abilitiesWrapper = document.querySelector('.pokemon-detail-wrap .pokemon-detail.move');
-    abilitiesWrapper.innerHTML = '';
-
-    if (currentPokemonId === id) {
-      displayPokemonDetails(pokemon);
-      const flavorText = getEnglishFlavorText(pokemonSpecies);
-      document.querySelector('.body3-fonts.pokemon-description').textContent = flavorText;
-
-      const [leftArrow, rightArrow] = ['#leftArrow', '#rightArrow'].map((sel) => document.querySelector(sel));
-      leftArrow.removeEventListener('click', handleLeftArrowClick);
-      rightArrow.removeEventListener('click', handleRightArrowClick);
-
-      if (id !== 1) {
-        leftArrow.addEventListener('click', handleLeftArrowClick);
-      }
-      if (id !== 151) {
-        rightArrow.addEventListener('click', handleRightArrowClick);
-      }
-
-      window.history.pushState({}, '', `./detail.html?id=${id}`);
-    }
-
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const MAX_POKEMONS = 151;
-  const pokemonID = new URLSearchParams(window.location.search).get('id');
-  const id = parseInt(pokemonID, 10);
-
-  if (id < 1 || id > MAX_POKEMONS) {
-    window.location.href = './index.html';
-    return;
-  }
-
-  currentPokemonId = id;
-  loadPokemon(id);
-});
-
-const typeColors = {
-  normal: '#A8A878',
-  fire: '#F08030',
-  water: '#6890F0',
-  electric: '#F8D030',
-  grass: '#78C850',
-  ice: '#98D8D8',
-  fighting: '#C03028',
-  poison: '#A040A0',
-  ground: '#E0C068',
-  flying: '#A890F0',
-  psychic: '#F85888',
-  bug: '#A8B820',
-  rock: '#B8A038',
-  ghost: '#705898',
-  dragon: '#7038F8',
-  steel: '#B8B8D0',
-  dark: '#EE99AC',
-};
 
 function setElementStyles(elements, cssProperty, value) {
   elements.forEach((element) => {
@@ -145,19 +68,6 @@ function setTypeBackgroundColor(pokemon) {
     }
   `;
   document.head.appendChild(styleTag);
-}
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function createAndAppendElement(parent, tag, options = {}) {
-  const element = document.createElement(tag);
-  Object.keys(options).forEach((key) => {
-    element[key] = options[key];
-  });
-  parent.appendChild(element);
-  return element;
 }
 
 function displayPokemonDetails(pokemon) {
@@ -235,3 +145,93 @@ function displayPokemonDetails(pokemon) {
 
   setTypeBackgroundColor(pokemon);
 }
+
+async function loadPokemon(id) {
+  try {
+    const [pokemon, pokemonSpecies] = await Promise.all([
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()),
+      fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((res) => res.json()),
+    ]);
+
+    const abilitiesWrapper = document.querySelector('.pokemon-detail-wrap .pokemon-detail.move');
+    abilitiesWrapper.innerHTML = '';
+
+    if (currentPokemonId === id) {
+      displayPokemonDetails(pokemon);
+      const flavorText = getEnglishFlavorText(pokemonSpecies);
+      document.querySelector('.body3-fonts.pokemon-description').textContent = flavorText;
+
+      const [leftArrow, rightArrow] = ['#leftArrow', '#rightArrow'].map((sel) => document.querySelector(sel));
+      leftArrow.removeEventListener('click', handleLeftArrowClick);
+      rightArrow.removeEventListener('click', handleRightArrowClick);
+
+      if (id !== 1) {
+        leftArrow.addEventListener('click', handleLeftArrowClick);
+      }
+      if (id !== 151) {
+        rightArrow.addEventListener('click', handleRightArrowClick);
+      }
+
+      window.history.pushState({}, '', `./detail.html?id=${id}`);
+    }
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+async function navigatePokemon(id) {
+  currentPokemonId = id;
+  await loadPokemon(id);
+}
+
+function handleLeftArrowClick() {
+  navigatePokemon(currentPokemonId - 1);
+}
+
+function handleRightArrowClick() {
+  navigatePokemon(currentPokemonId + 1);
+}
+
+function getEnglishFlavorText(pokemonSpecies) {
+  const pok = pokemonSpecies.flavor_text_entries;
+  const englishTexts = pok
+    .filter((entry) => entry.language.name === 'en')
+    .map((entry) => entry.flavor_text);
+  return englishTexts.length > 0 ? englishTexts[0].replace(/\f/g, ' ') : '';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const MAX_POKEMONS = 151;
+  const pokemonID = new URLSearchParams(window.location.search).get('id');
+  const id = parseInt(pokemonID, 10);
+
+  if (id < 1 || id > MAX_POKEMONS) {
+    window.location.href = './index.html';
+    return;
+  }
+
+  currentPokemonId = id;
+  loadPokemon(id);
+});
+
+const typeColors = {
+  normal: '#A8A878',
+  fire: '#F08030',
+  water: '#6890F0',
+  electric: '#F8D030',
+  grass: '#78C850',
+  ice: '#98D8D8',
+  fighting: '#C03028',
+  poison: '#A040A0',
+  ground: '#E0C068',
+  flying: '#A890F0',
+  psychic: '#F85888',
+  bug: '#A8B820',
+  rock: '#B8A038',
+  ghost: '#705898',
+  dragon: '#7038F8',
+  steel: '#B8B8D0',
+  dark: '#EE99AC',
+};
