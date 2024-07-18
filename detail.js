@@ -62,19 +62,19 @@ function setTypeBackgroundColor(pokemon) {
   setElementStyles(
     document.querySelectorAll('.power-wrapper > p'),
     'backgroundColor',
-    color,
+    color
   );
 
   setElementStyles(
     document.querySelectorAll('.stats-wrap p.stats'),
     'color',
-    color,
+    color
   );
 
   setElementStyles(
     document.querySelectorAll('.stats-wrap .progress-bar'),
     'color',
-    color,
+    color
   );
 
   const rgbaColor = rgbaFromHex(color);
@@ -91,9 +91,7 @@ function setTypeBackgroundColor(pokemon) {
 }
 
 function displayPokemonDetails(pokemon) {
-  const {
-    name, id, types, weight, height, abilities, stats,
-  } = pokemon;
+  const { name, id, types, weight, height, abilities, stats } = pokemon;
   const capitalizePokemonName = capitalizeFirstLetter(name);
 
   document.querySelector('title').textContent = capitalizePokemonName;
@@ -101,9 +99,12 @@ function displayPokemonDetails(pokemon) {
   const detailMainElement = document.querySelector('.detail-main');
   detailMainElement.classList.add(name.toLowerCase());
 
-  document.querySelector('.name-wrap .name').textContent = capitalizePokemonName;
+  document.querySelector('.name-wrap .name').textContent =
+    capitalizePokemonName;
 
-  document.querySelector('.pokemon-id-wrap .body2-fonts').textContent = `#${String(id).padStart(3, '0')}`;
+  document.querySelector(
+    '.pokemon-id-wrap .body2-fonts'
+  ).textContent = `#${String(id).padStart(3, '0')}`;
 
   const imageElement = document.querySelector('.detail-img-wrapper img');
   imageElement.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
@@ -118,10 +119,16 @@ function displayPokemonDetails(pokemon) {
     });
   });
 
-  document.querySelector('.pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight').textContent = `${weight / 10}kg`;
-  document.querySelector('.pokemon-detail-wrap .pokemon-detail p.body3-fonts.height').textContent = `${height / 10}m`;
+  document.querySelector(
+    '.pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight'
+  ).textContent = `${weight / 10}kg`;
+  document.querySelector(
+    '.pokemon-detail-wrap .pokemon-detail p.body3-fonts.height'
+  ).textContent = `${height / 10}m`;
 
-  const abilitiesWrapper = document.querySelector('.pokemon-detail-wrap .pokemon-detail.move');
+  const abilitiesWrapper = document.querySelector(
+    '.pokemon-detail-wrap .pokemon-detail.move'
+  );
   abilitiesWrapper.innerHTML = '';
   abilities.forEach(({ ability }) => {
     createAndAppendElement(abilitiesWrapper, 'p', {
@@ -170,19 +177,28 @@ function displayPokemonDetails(pokemon) {
 async function loadPokemon(id) {
   try {
     const [pokemon, pokemonSpecies] = await Promise.all([
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()),
-      fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((res) => res.json()),
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) =>
+        res.json()
+      ),
+      fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((res) =>
+        res.json()
+      ),
     ]);
 
-    const abilitiesWrapper = document.querySelector('.pokemon-detail-wrap .pokemon-detail.move');
+    const abilitiesWrapper = document.querySelector(
+      '.pokemon-detail-wrap .pokemon-detail.move'
+    );
     abilitiesWrapper.innerHTML = '';
 
     if (currentPokemonId === id) {
       displayPokemonDetails(pokemon);
       const flavorText = getEnglishFlavorText(pokemonSpecies);
-      document.querySelector('.body3-fonts.pokemon-description').textContent = flavorText;
+      document.querySelector('.body3-fonts.pokemon-description').textContent =
+        flavorText;
 
-      const [leftArrow, rightArrow] = ['#leftArrow', '#rightArrow'].map((sel) => document.querySelector(sel));
+      const [leftArrow, rightArrow] = ['#leftArrow', '#rightArrow'].map((sel) =>
+        document.querySelector(sel)
+      );
       leftArrow.removeEventListener('click', handleLeftArrowClick);
       rightArrow.removeEventListener('click', handleRightArrowClick);
 
