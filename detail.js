@@ -78,7 +78,6 @@ async function loadPokemon(id) {
     abilitiesWrapper.innerHTML = '';
 
     if (currentPokemonId === id) {
-      displayPokemonDetails(pokemon);
       const flavorText = getEnglishFlavorText(pokemonSpecies);
       document.querySelector('.body3-fonts.pokemon-description').textContent = flavorText;
 
@@ -197,7 +196,7 @@ function displayPokemonDetails(pokemon) {
     speed: 'SPD',
   };
 
-  stats.forEach(({ stat, base_stat }) => {
+  stats.forEach(({ stat, baseStat }) => {
     const statDiv = document.createElement('div');
     statDiv.className = 'stats-wrap';
     statsWrapper.appendChild(statDiv);
@@ -209,17 +208,21 @@ function displayPokemonDetails(pokemon) {
 
     createAndAppendElement(statDiv, 'p', {
       className: 'body3-fonts',
-      textContent: String(base_stat).padStart(3, '0'),
+      textContent: String(baseStat).padStart(3, '0'),
     });
 
     createAndAppendElement(statDiv, 'progress', {
       className: 'progress-bar',
-      value: base_stat,
+      value: baseStat,
       max: 100,
     });
   });
 
   setTypeBackgroundColor(pokemon);
+}
+
+if (currentPokemonId == id) {
+  displayPokemonDetails(pokemon);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
