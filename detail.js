@@ -55,6 +55,10 @@ function getEnglishFlavorText(pokemonSpecies) {
   return englishTexts.length > 0 ? englishTexts[0].replace(/\f/g, ' ') : '';
 }
 
+async function navigatePokemon(id) {
+  currentPokemonId = id;
+}
+
 function handleLeftArrowClick() {
   navigatePokemon(currentPokemonId - 1);
 }
@@ -96,11 +100,6 @@ async function loadPokemon(id) {
   } catch (error) {
     return false;
   }
-}
-
-async function navigatePokemon(id) {
-  currentPokemonId = id;
-  await loadPokemon(id);
 }
 
 function setTypeBackgroundColor(pokemon) {
