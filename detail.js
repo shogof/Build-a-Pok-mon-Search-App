@@ -162,7 +162,7 @@ function displayPokemonDetails(pokemon) {
     speed: 'SPD',
   };
 
-  stats.forEach(({ stat, base }) => {
+  stats.forEach(({ stat, base_stat }) => {
     const statDiv = document.createElement('div');
     statDiv.className = 'stats-wrap';
     statsWrapper.appendChild(statDiv);
@@ -174,12 +174,12 @@ function displayPokemonDetails(pokemon) {
 
     createAndAppendElement(statDiv, 'p', {
       className: 'body3-fonts',
-      textContent: String(base).padStart(3, '0'),
+      textContent: String(base_stat).padStart(3, '0'),
     });
 
     createAndAppendElement(statDiv, 'progress', {
       className: 'progress-bar',
-      value: base,
+      value: base_stat,
       max: 100,
     });
   });
