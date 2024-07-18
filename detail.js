@@ -57,7 +57,14 @@ function getEnglishFlavorText(pokemonSpecies) {
 
 async function navigatePokemon(id) {
   currentPokemonId = id;
-  await loadPokemon(id);
+}
+
+function handleLeftArrowClick() {
+  navigatePokemon(currentPokemonId - 1);
+}
+
+function handleRightArrowClick() {
+  navigatePokemon(currentPokemonId + 1);
 }
 
 async function loadPokemon(id) {
@@ -79,10 +86,10 @@ async function loadPokemon(id) {
       leftArrow.removeEventListener('click', handleLeftArrowClick);
       rightArrow.removeEventListener('click', handleRightArrowClick);
 
-      if (id > 1) {
+      if (id !== 1) {
         leftArrow.addEventListener('click', handleLeftArrowClick);
       }
-      if (id < 151) {
+      if (id !== 151) {
         rightArrow.addEventListener('click', handleRightArrowClick);
       }
 
@@ -91,7 +98,6 @@ async function loadPokemon(id) {
 
     return true;
   } catch (error) {
-    console.error('Failed to load Pokémon data:', error);
     return false;
   }
 }
@@ -214,14 +220,6 @@ function displayPokemonDetails(pokemon) {
   });
 
   setTypeBackgroundColor(pokemon);
-}
-
-function handleLeftArrowClick() {
-  navigatePokemon(currentPokemonId - 1);
-}
-
-function handleRightArrowClick() {
-  navigatePokemon(currentPokemonId + 1);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
