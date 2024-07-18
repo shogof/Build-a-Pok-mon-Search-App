@@ -161,7 +161,7 @@ function displayPokemonDetails(pokemon) {
     'special-defense': 'SDEF',
     speed: 'SPD',
   };
-//please before use change the base to base-stat I will find it problem as soon as possible
+
   stats.forEach(({ stat, base }) => {
     const statDiv = document.createElement('div');
     statDiv.className = 'stats-wrap';
