@@ -162,7 +162,7 @@ function displayPokemonDetails(pokemon) {
     speed: 'SPD',
   };
 //please before use change the base to base-stat I will find it problem as soon as possible
-  stats.forEach(({ stat, base_stat }) => {
+  stats.forEach(({ stat, base }) => {
     const statDiv = document.createElement('div');
     statDiv.className = 'stats-wrap';
     statsWrapper.appendChild(statDiv);
@@ -174,12 +174,12 @@ function displayPokemonDetails(pokemon) {
 
     createAndAppendElement(statDiv, 'p', {
       className: 'body3-fonts',
-      textContent: String(base_stat).padStart(3, '0'),
+      textContent: String(base).padStart(3, '0'),
     });
 
     createAndAppendElement(statDiv, 'progress', {
       className: 'progress-bar',
-      value: base_stat,
+      value: base,
       max: 100,
     });
   });
