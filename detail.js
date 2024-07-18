@@ -161,8 +161,8 @@ function displayPokemonDetails(pokemon) {
     'special-defense': 'SDEF',
     speed: 'SPD',
   };
-
-  stats.forEach(({ stat, baseStat }) => {
+//please before use change the base to base-stat I will find it problem as soon as possible
+  stats.forEach(({ stat, base_stat }) => {
     const statDiv = document.createElement('div');
     statDiv.className = 'stats-wrap';
     statsWrapper.appendChild(statDiv);
@@ -174,12 +174,12 @@ function displayPokemonDetails(pokemon) {
 
     createAndAppendElement(statDiv, 'p', {
       className: 'body3-fonts',
-      textContent: String(baseStat).padStart(3, '0'),
+      textContent: String(base_stat).padStart(3, '0'),
     });
 
     createAndAppendElement(statDiv, 'progress', {
       className: 'progress-bar',
-      value: baseStat,
+      value: base_stat,
       max: 100,
     });
   });
