@@ -57,14 +57,7 @@ function getEnglishFlavorText(pokemonSpecies) {
 
 async function navigatePokemon(id) {
   currentPokemonId = id;
-}
-
-function handleLeftArrowClick() {
-  navigatePokemon(currentPokemonId - 1);
-}
-
-function handleRightArrowClick() {
-  navigatePokemon(currentPokemonId + 1);
+  await loadPokemon(id);
 }
 
 async function loadPokemon(id) {
@@ -78,6 +71,7 @@ async function loadPokemon(id) {
     abilitiesWrapper.innerHTML = '';
 
     if (currentPokemonId === id) {
+      displayPokemonDetails(pokemon);
       const flavorText = getEnglishFlavorText(pokemonSpecies);
       document.querySelector('.body3-fonts.pokemon-description').textContent = flavorText;
 
@@ -85,10 +79,10 @@ async function loadPokemon(id) {
       leftArrow.removeEventListener('click', handleLeftArrowClick);
       rightArrow.removeEventListener('click', handleRightArrowClick);
 
-      if (id !== 1) {
+      if (id > 1) {
         leftArrow.addEventListener('click', handleLeftArrowClick);
       }
-      if (id !== 151) {
+      if (id < 151) {
         rightArrow.addEventListener('click', handleRightArrowClick);
       }
 
@@ -97,6 +91,7 @@ async function loadPokemon(id) {
 
     return true;
   } catch (error) {
+    console.error('Failed to load Pokémon data:', error);
     return false;
   }
 }
@@ -221,8 +216,12 @@ function displayPokemonDetails(pokemon) {
   setTypeBackgroundColor(pokemon);
 }
 
-if (currentPokemonId == id) {
-  displayPokemonDetails(pokemon);
+function handleLeftArrowClick() {
+  navigatePokemon(currentPokemonId - 1);
+}
+
+function handleRightArrowClick() {
+  navigatePokemon(currentPokemonId + 1);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
